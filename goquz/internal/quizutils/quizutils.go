@@ -4,8 +4,6 @@ import (
 	"encoding/csv"
 	"fmt"
 	"os"
-
-	"github.com/babugeet/goquz/goquz/internal/variables"
 )
 
 func ReadCSVfile(filename string) ([][]string, error) {
@@ -27,27 +25,24 @@ func ReadCSVfile(filename string) ([][]string, error) {
 
 }
 
-func CheckAnswer(userinput, actualAnswer string) {
-	if userinput == actualAnswer {
-		// fmt.Println("Correct Answer")
-	} else {
-		// fmt.Println("Wrong Answer")
-		countFailure()
-	}
+func CheckAnswer(userinput, actualAnswer string) bool {
+	return userinput != actualAnswer
+	// fmt.Println("Correct Answer")
 
-}
+	// fmt.Println("Wrong Answer")
 
-func countFailure() {
-	variables.FailureCount = variables.FailureCount + 1
 }
 
 func QuizQA(csvContent [][]string) {
+	var failureCount int
 	for _, line := range csvContent {
 		fmt.Println(line[0])
-		CheckAnswer(GetUserInput(), line[1])
+		if !CheckAnswer(GetUserInput(), line[1]) {
+			failureCount = failureCount + 1
+		}
 
 	}
-	fmt.Printf("Correct Answer %v , Wrong Answer %v", len(csvContent)-(variables.FailureCount), (variables.FailureCount))
+	fmt.Printf("Correct Answer %v , Wrong Answer %v", (failureCount), len(csvContent)-(failureCount))
 }
 
 func GetUserInput() string {
