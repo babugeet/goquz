@@ -1,5 +1,5 @@
 package constants
 
 const (
-	Filename string = "/workspaces/goquz/quiz.csv"
+	Filename string = "/workspaces/goquz/problems.csv"
 )
